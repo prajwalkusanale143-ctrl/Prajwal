@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paper & Pen - Stationery Shop</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f8f9fc;
+      color: #333;
+    }
+
+    /* Navbar */
+    header {
+      background: #ffffff;
+      padding: 18px 7%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #5b4bdb;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      margin-left: 25px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: #5b4bdb;
+    }
+
+    .cart {
+      background: #5b4bdb;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      font-size: 15px;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 7%;
+      background: linear-gradient(135deg, #eeeaff, #fff7f0);
+    }
+
+    .hero-text {
+      max-width: 550px;
+    }
+
+    .hero-text h1 {
+      font-size: 52px;
+      line-height: 1.1;
+      color: #292343;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 30px;
+      line-height: 1.6;
+    }
+
+    .shop-btn {
+      display: inline-block;
+      padding: 14px 25px;
+      background: #5b4bdb;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .hero-image {
+      font-size: 170px;
+    }
+
+    /* Products */
+    .products-section {
+      padding: 60px 7%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 34px;
+      color: #292343;
+      margin-bottom: 30px;
+    }
+
+    /* Search */
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+
+    #search {
+      width: 400px;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    /* Categories */
+    .categories {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 35px;
+    }
+
+    .category-btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 20px;
+      background: #eeeaff;
+      color: #5b4bdb;
+      cursor: pointer;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      background: #5b4bdb;
+      color: white;
+    }
+
+    /* Product Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+      transition: 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+    }
+
+    .product-image {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f5f3ff;
+      border-radius: 10px;
+      font-size: 80px;
+      margin-bottom: 15px;
+    }
+
+    .product h3 {
+      margin-bottom: 8px;
+      color: #292343;
+    }
+
+    .category {
+      color: #888;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      color: #5b4bdb;
+      margin-bottom: 15px;
+    }
+
+    .add-btn {
+      width: 100%;
+      padding: 11px;
+      background: #292343;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .add-btn:hover {
+      background: #5b4bdb;
+    }
+
+    /* About */
+    .about {
+      padding: 70px 7%;
+      background: white;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 34px;
+      color: #292343;
+      margin-bottom: 15px;
+    }
+
+    .about p {
+      max-width: 700px;
+      margin: auto;
+      color: #666;
+      line-height: 1.7;
+    }
+
+    /* Footer */
+    footer {
+      background: #292343;
+      color: white;
+      text-align: center;
+      padding: 30px;
+    }
+
+    footer p {
+      margin: 5px;
+    }
+
+    /* Cart Popup */
+    .cart-popup {
+      position: fixed;
+      right: 20px;
+      top: 80px;
+      width: 320px;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 200;
+    }
+
+    .cart-popup h2 {
+      margin-bottom: 15px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .checkout {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #5b4bdb;
+      color: white;
+      border: none;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media (max-width: 1000px) {
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-image {
+        font-size: 120px;
+      }
+    }
+
+    @media (max-width: 650px) {
+      header {
+        padding: 15px 5%;
+      }
+
+      nav a {
+        display: none;
+      }
+
+      .hero {
+        text-align: center;
+        flex-direction: column;
+        padding: 50px 5%;
+      }
+
+      .hero-text h1 {
+        font-size: 38px;
+      }
+
+      .hero-image {
+        font-size: 90px;
+        margin-top: 30px;
+      }
+
+      .product-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #search {
+        width: 100%;
+      }
+
+      .products-section {
+        padding: 50px 5%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <div class="logo">📚 Paper & Pen</div>
+
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+    </nav>
+
+    <button class="cart" onclick="toggleCart()">
+      🛒 Cart (<span id="cart-count">0</span>)
+    </button>
+  </header>
+
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+
+    <div class="hero-text">
+      <h1>Everything You Need to Create.</h1>
+
+      <p>
+        Discover beautiful notebooks, pens, art supplies,
+        school essentials and more — all in one place.
+      </p>
+
+      <a href="#products" class="shop-btn">
+        Shop Now →
+      </a>
+    </div>
+
+    <div class="hero-image">
+      ✏️📓
+    </div>
+
+  </section>
+
+
+  <!-- Products -->
+  <section class="products-section" id="products">
+
+    <h2 class="section-title">Our Products</h2>
+
+    <!-- Search -->
+    <div class="search-container">
+      <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search stationery..."
+        onkeyup="searchProducts()"
+      >
+    </div>
+
+    <!-- Categories -->
+    <div class="categories">
+
+      <button
+        class="category-btn active"
+        onclick="filterProducts('all', this)">
+        All
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterProducts('notebooks', this)">
+        Notebooks
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterProducts('pens', this)">
+        Pens
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterProducts('art', this)">
+        Art
+      </button>
+
+      <button
+        class="category-btn"
+        onclick="filterProducts('school', this)">
+        School
+      </button>
+
+    </div>
+
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="product-grid">
+
+      <div class="product" data-category="notebooks" data-name="Classic Notebook">
+        <div class="product-image">📓</div>
+        <h3>Classic Notebook</h3>
+        <p class="category">Notebooks</p>
+        <p class="price">₹199</p>
+        <button class="add-btn" onclick="addToCart('Classic Notebook', 199)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="pens" data-name="Premium Gel Pen">
+        <div class="product-image">🖊️</div>
+        <h3>Premium Gel Pen</h3>
+        <p class="category">Pens</p>
+        <p class="price">₹49</p>
+        <button class="add-btn" onclick="addToCart('Premium Gel Pen', 49)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="art" data-name="Watercolor Set">
+        <div class="product-image">🎨</div>
+        <h3>Watercolor Set</h3>
+        <p class="category">Art Supplies</p>
+        <p class="price">₹299</p>
+        <button class="add-btn" onclick="addToCart('Watercolor Set', 299)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="school" data-name="School Pencil Box">
+        <div class="product-image">🖍️</div>
+        <h3>School Pencil Box</h3>
+        <p class="category">School</p>
+        <p class="price">₹149</p>
+        <button class="add-btn" onclick="addToCart('School Pencil Box', 149)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="notebooks" data-name="Daily Planner">
+        <div class="product-image">📔</div>
+        <h3>Daily Planner</h3>
+        <p class="category">Notebooks</p>
+        <p class="price">₹249</p>
+        <button class="add-btn" onclick="addToCart('Daily Planner', 249)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="pens" data-name="Fountain Pen">
+        <div class="product-image">🖋️</div>
+        <h3>Fountain Pen</h3>
+        <p class="category">Pens</p>
+        <p class="price">₹399</p>
+        <button class="add-btn" onclick="addToCart('Fountain Pen', 399)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="art" data-name="Sketching Kit">
+        <div class="product-image">✏️</div>
+        <h3>Sketching Kit</h3>
+        <p class="category">Art Supplies</p>
+        <p class="price">₹349</p>
+        <button class="add-btn" onclick="addToCart('Sketching Kit', 349)">
+          Add to Cart
+        </button>
+      </div>
+
+
+      <div class="product" data-category="school" data-name="Geometry Box">
+        <div class="product-image">📐</div>
+        <h3>Geometry Box</h3>
+        <p class="category">School</p>
+        <p class="price">₹129</p>
+        <button class="add-btn" onclick="addToCart('Geometry Box', 129)">
+          Add to Cart
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- About -->
+  <section class="about" id="about">
+
+    <h2>About Paper & Pen</h2>
+
+    <p>
+      Paper & Pen is your one-stop stationery shop for students,
+      artists, professionals and creative minds. We bring you
+      quality stationery at affordable prices.
+    </p>
+
+  </section>
+
+
+  <!-- Footer -->
+  <footer>
+
+    <p>📚 <strong>Paper & Pen</strong></p>
+
+    <p>Quality stationery for every idea.</p>
+
+    <p>© 2026 Paper & Pen. All rights reserved.</p>
+
+  </footer>
+
+
+  <!-- Cart -->
+  <div class="cart-popup" id="cart-popup">
+
+    <h2>🛒 Your Cart</h2>
+
+    <div id="cart-items">
+      <p>Your cart is empty.</p>
+    </div>
+
+    <h3 id="cart-total">Total: ₹0</h3>
+
+    <button class="checkout" onclick="checkout()">
+      Proceed to Checkout
+    </button>
+
+  </div>
+
+
+  <script>
+
+    let cart = [];
+
+    /* Add Product */
+    function addToCart(name, price) {
+
+      cart.push({
+        name: name,
+        price: price
+      });
+
+      updateCart();
+
+      alert(name + " added to cart! 🛒");
+    }
+
+
+    /* Update Cart */
+    function updateCart() {
+
+      const cartCount = document.getElementById("cart-count");
+      const cartItems = document.getElementById("cart-items");
+      const cartTotal = document.getElementById("cart-total");
+
+      cartCount.textContent = cart.length;
+
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<p>Your cart is empty.</p>";
+        cartTotal.textContent = "Total: ₹0";
+        return;
+      }
+
+      let total = 0;
+
+      cartItems.innerHTML = "";
+
+      cart.forEach((item, index) => {
+
+        total += item.price;
+
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <span>${item.name}</span>
+
+            <strong>
+              ₹${item.price}
+              <button
+                onclick="removeFromCart(${index})"
+                style="border:none;background:none;cursor:pointer;">
+                ❌
+              </button>
+            </strong>
+          </div>
+        `;
+
+      });
+
+      cartTotal.textContent = "Total: ₹" + total;
+    }
+
+
+    /* Remove Product */
+    function removeFromCart(index) {
+
+      cart.splice(index, 1);
+
+      updateCart();
+    }
+
+
+    /* Open / Close Cart */
+    function toggleCart() {
+
+      const popup = document.getElementById("cart-popup");
+
+      if (popup.style.display === "block") {
+        popup.style.display = "none";
+      } else {
+        popup.style.display = "block";
+      }
+    }
+
+
+    /* Category Filter */
+    function filterProducts(category, button) {
+
+      const products = document.querySelectorAll(".product");
+
+      document
+        .querySelectorAll(".category-btn")
+        .forEach(btn => btn.classList.remove("active"));
+
+      button.classList.add("active");
+
+      products.forEach(product => {
+
+        if (
+          category === "all" ||
+          product.dataset.category === category
+        ) {
+          product.style.display = "block";
+        } else {
+          product.style.display = "none";
+        }
+
+      });
+
+    }
+
+
+    /* Search */
+    function searchProducts() {
+
+      const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+      const products =
+        document.querySelectorAll(".product");
+
+      products.forEach(product => {
+
+        const name =
+          product.dataset.name.toLowerCase();
+
+        if (name.includes(search)) {
+          product.style.display = "block";
+        } else {
+          product.style.display = "none";
+        }
+
+      });
+
+    }
+
+
+    /* Checkout */
+    function checkout() {
+
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
+      alert(
+        "Thank you for shopping with Paper & Pen! 🎉\n\n" +
+        "Your order has been placed."
+      );
+
+      cart = [];
+
+      updateCart();
+
+      toggleCart();
+    }
+
+  </script>
+
+</body>
+          </html>
